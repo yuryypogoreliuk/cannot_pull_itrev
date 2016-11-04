@@ -14,8 +14,13 @@
 
 <script>
 
+<<<<<<< HEAD
 
+=======
+function drawSongs(){
+>>>>>>> master
 
+}
 
 $(document).ready(function () {
     VK.init({
@@ -122,7 +127,7 @@ $(document).ready(function () {
                         }
 
                         $('#vkfriends').append("<div class='col-xs-10'></div>");
-                        $($(".col-xs-10").get(-1)).append("<img src='" + data_friends_audio.response.items[0].photo + "'>");
+                        $($(".col-xs-10").get(-1)).append("<img class='img-circle' src='" + data_friends_audio.response.items[0].photo + "'>");
                         $($(".col-xs-10").get(-1)).append("   " + data_friends_audio.response.items[0].name + "<br><hr>")
 
                         // var friend_id = data.response["items"][i];
@@ -175,7 +180,42 @@ $(document).ready(function () {
             });
         }, 15)
     });
+    
+    $('#searchMusic').keyup(function(event){
+        if(event.which == 13){
+            var query = $('#searchMusic').val()
+            var audios = VK.Api.call('audio.search', 
+                {q:query, auto_complete:1, search_own:1, v:5.60},
+                function(data){
+                    $('#vkmusic').empty();
+                    console.log('audio.get returns it ->' + JSON.stringify(data));
+                    console.log(data["response"]["items"][1]["id"]); // this is song id
+                    
+                    var aud_template = '<audio src="" controls></audio>';
 
+                    for (var i = 1; i <= data.response.items.length - 2  ; i++) {
+                        console.log(i + 'th iteration');
+
+                        $('#vkmusic').append("<div class='col-xs-12'></div>");
+                        a = $($(".col-xs-12").get(-1));
+
+                        var song = data.response.items[i];
+                        var song_title = song["artist"] + "--" + song["title"];
+                        a.append("<p>" + song_title + "</p>");
+
+
+
+                        src = data.response.items[i]["url"];
+                        var to_insert = $(aud_template);
+                        to_insert.attr("src", src);
+                        //to_insert.wrap("<div class='col-xs-12'></div>");
+                        a.append(to_insert);
+                        a.append("<hr>");
+                    }
+                })
+        }
+        return false;
+    })
     
 })
 
@@ -320,7 +360,7 @@ $(document).ready(function () {
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <form class="navbar-form navbar-left">
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Search music">
+                        <input type="text" id="searchMusic" class="form-control" placeholder="Search music">
                     </div>
                     <button type="submit" class="btn btn-default button-grey" id="subbut">SEARCH</button>
                 </form>
