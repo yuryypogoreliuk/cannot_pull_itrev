@@ -101,7 +101,7 @@ $(document).ready(function () {
                         console.log('audio.get returns it ->' + JSON.stringify(data_friends_audio));
                         //console.log(data_friends_audio.response.items[1]["id"]); // this is song id
                         
-                        var aud_template = '<audio src="" controls></audio>';
+                        var aud_template = '<audio style="width:100%; color:red;" src="" controls></audio>';
 
                         for (var i = 1; i <= data_friends_audio.response.items.length - 2  ; i++) {
                             console.log(i + 'th iteration');
@@ -120,6 +120,23 @@ $(document).ready(function () {
                             to_insert.attr("src", src);
                             //to_insert.wrap("<div class='col-xs-12'></div>");
                             a.append(to_insert);
+                            var comment = '<div class="input-group"><input type="text" class="form-control" placeholder="Search for..."><span class="input-group-btn"><button class="btn btn-default" type="button">Go!</button></span>';
+                            a.append(comment);
+                            var rate = `
+                            <fieldset class="rating">
+                                <input type="radio"  name="rating" value="5" />
+                                <input type="radio"  name="rating" value="4 and a half" />
+                                <input type="radio"  name="rating" value="4" />
+                                <input type="radio"  name="rating" value="3 and a half" />
+                                <input type="radio"  name="rating" value="3" /><
+                                <input type="radio"  name="rating" value="2 and a half" />
+                                <input type="radio"  name="rating" value="2" />
+                                <input type="radio"  name="rating" value="1 and a half" />
+                                <input type="radio"  name="rating" value="1" />
+                                <input type="radio"  name="rating" value="half" />
+                            </fieldset>
+                            `;
+                            a.append(rate);
                             a.append("<hr>");
                         }
 
@@ -356,10 +373,13 @@ $(document).ready(function () {
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <form class="navbar-form navbar-left">
-                    <div class="form-group">
-                        <input type="text" id="searchMusic" class="form-control" placeholder="Search music">
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="searchMusic" placeholder="Search for...">
+                          <span class="input-group-btn">
+                            <button class="btn btn-default" type="button">Go!</button>
+                          </span>
                     </div>
-                    <button type="submit" class="btn btn-default button-grey" id="subbut">SEARCH</button>
+                    
                 </form>
                 
                 
